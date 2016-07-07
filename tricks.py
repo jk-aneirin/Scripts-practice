@@ -39,4 +39,28 @@ python -m cProfile myscript.py
 '''pip升级所有包'''
 pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U
 
+'''查询函数的参数'''
+import inspect
+print inspect.getargspec(func)
+
+'''查询对象的属性'''
+hasattr(obj,attr_name)
+#例如
+a=[1,2,3]
+print hasattr(a,'append')
+
+'''查询对象所属的类和类名称'''
+a=[1,2,3]
+print a.__class__
+print a.__class__.__name__
+
+'''查询父类'''
+print list.__base__
+
+'''搜索路径'''
+#当使用import导入模块时，python使用搜索路径来查找模块
+import sys
+print sys.path #打印出搜素路径
+#也可以通过修改环境变量PYTHONPATH来加入新路径
+
 
