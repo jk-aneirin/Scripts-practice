@@ -1,0 +1,1 @@
+fuzzyfinder.py实现模糊匹配，参数collection是待选的字符串列表，user_input是用户的输入字符串，通过输入字符串对比collection中的字符串，挑选出相似字符串保存在suggestions中
