@@ -1,7 +1,7 @@
 import re
 def fuzzyfinder(user_input,collection):
     suggestions=[]
-    pattern='.*?'.join(user_input)
+    pattern='.*?'.join(user_input) //使用非贪婪匹配
     regex=re.compile(pattern)
     for item in collection:
         match=regex.search(item)
