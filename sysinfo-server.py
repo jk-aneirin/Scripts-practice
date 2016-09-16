@@ -59,12 +59,6 @@ class GetSysInfo():
 
     def get_meminfo(self):
         ret_mem=[]
-#        meminfo=open('/proc/meminfo').read()
-#        m1=re.search(r'^MemTotal:\s+(\d+)',meminfo)
-#        m2=re.search(r'^MemAvailable:\s+(\d+)',meminfo)
-#        ret_mem.append(m1.group())
-#        ret_mem.append(m2.group())
-#        return ret_mem
         with open('/proc/meminfo','r') as f:
             for line in f:
                 m1=re.search(r'^MemTotal:\s+(\d+)',line)
