@@ -11,8 +11,8 @@ logging.basicConfig(level= logging.DEBUG,\
         filemode = 'w')
 
 def check_port(address,port):
-    s = socket.socket()
     try:
+        s = socket.socket()
         s.connect((address,port))
         return True
     except socket.error,e:
