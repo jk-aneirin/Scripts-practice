@@ -70,7 +70,7 @@ class GetSysInfo():
                 else:
                     continue
         return ret_mem
-
+    def get
 
 class GetSysteminfo(object):
     def __init__(self):

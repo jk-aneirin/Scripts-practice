@@ -4,4 +4,5 @@ filemonitor.py:监控一个指定目录，如果目录中的文件有修改，�
 sendmail.py:使用qq邮箱向163邮箱发封邮件，发送前需要开启qq邮箱的IMAP/SMTP服务并获得授权码
 popmail.py:使用pop协议接收来自服务器pop.qq.com上的邮件，取得的密码是通过开通qq邮箱的pop3/smtp服务获得的
 sysinfo-server.py||sysinfo-client.py:使用模块Pyro4实现RPC，客户端可以获得运行服务端程序的服务器的cpu disk memory信息，因为没有使用ns，每次重启服务端，客户端需要换uri地址
-
+mon8k.py:监控服务器8000端口，如果失败，则启动服务
+setsys.py:设置系统时间
