@@ -17,6 +17,8 @@ def check_port(address,port):
         return True
     except socket.error,e:
         return False
+    finally:
+        s.close()
 
 if __name__=="__main__":
     if check_port('10.0.0.10',8000):
