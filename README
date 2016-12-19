@@ -6,3 +6,4 @@ popmail.py:使用pop协议接收来自服务器pop.qq.com上的邮件，取得�
 sysinfo-server.py||sysinfo-client.py:使用模块Pyro4实现RPC，客户端可以获得运行服务端程序的服务器的cpu disk memory信息，因为没有使用ns，每次重启服务端，客户端需要换uri地址
 mon8k.py:监控服务器8000端口，如果失败，则启动服务
 setsys.py:设置系统时间
+omitpoundsign.py:删除文件中开头包含井号的行
