@@ -8,3 +8,4 @@ mon8k.py:监控服务器8000端口，如果失败，则启动服务
 setsys.py:设置系统时间
 omitpoundsign.py:删除文件中开头包含井号的行
 ipstat.py:统计tengine日志文件的ip数目
+resetvpn.py:修改Shadowsocks服务配置，主要涉及json文件的操作
