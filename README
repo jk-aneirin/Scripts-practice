@@ -9,6 +9,7 @@ mon8k.py:监控服务器8000端口，如果失败，则启动服务
 setsys.py:设置系统时间
 omitpoundsign.py:删除文件中开头包含井号的行
 ipstat.py:统计tengine日志文件的ip数目
-resetvpn.py:修改Shadowsocks服务配置，主要涉及json文件的操作
+resetvpn_v1.py:修改Shadowsocks服务配置，主要涉及json文件的操作
+resetvpn_v2.py:上个文件的升级版
 changeroute.py:内网主机有4个出口网关，通过出口网关的链路质量来设置内网主机网关（需要配置内网主机与网关的公钥认证）
 pbzip2log.py:将指定目录的日志文件使用pbzip2压缩，使用参数-n来控制不压缩当天的文件（涉及模块getopt的用法）
