@@ -9,7 +9,7 @@ import logging
 logging.basicConfig(level= logging.DEBUG,\
         format = '%(asctime)s %(levelname)s %(message)s',\
         datefmt = '%a, %d %b %Y %H:%M:%S',\
-        filename = '/home/xuliang/sockproxy.log',\
+        filename = '/path/sockproxy.log',\
         filemode = 'a+')
 
 class ResetProxy():
@@ -18,9 +18,9 @@ class ResetProxy():
         self.proxy=""
 
     def GetOneProxy(self):
-        s1=["j{}.0bad.com".format(i) for i in range(5)]
-        s2=['jp5.0bad.com','uk.0bad.com','uk2.0bad.com','sg.0bad.com','hk.0bad.com','ne2.0bad.com','tw.0bad.com']
-        s3=["us{}.0bad.com".format(i) for i in range(10)]
+        s1=["a.bad.com","b.bad.com","c.bad.com"]
+        s2=["d.aa.com","e.aa.com"]
+        s3=["f.bb.com","g.bb.com"]
         s1.extend(s2)
         s1.extend(s3)
         while True:
@@ -55,7 +55,7 @@ class ResetProxy():
         os.system('service sslocal restart')
 
 def LinkStatus():
-    httpcode=subprocess.Popen('curl -s -o /dev/null -I -w "%{http_code}" -x socks5h://10.0.0.3:7070 https://www.facebook.com',\
+    httpcode=subprocess.Popen('curl -s -o /dev/null -I -w "%{http_code}" -x socks5h://10.0.2.33:7070 https://www.facebook.com',\
                             shell=True,stdout=subprocess.PIPE)
     if httpcode.stdout.read()=='200':
         return True
