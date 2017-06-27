@@ -7,19 +7,17 @@ import base64
 import getpass
 
 class ReferLdap():
-    def __init__(self,ldap_server="ldaps://ipa.wumii.net:636"):
+    def __init__(self,ldap_server="ldaps://ldapserver:port"):
         self.ldap_server=ldap_server
         ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_ALLOW)
         self.ldapconn=ldap.initialize(self.ldap_server)
-        self.b64enret=""
+        self.authSF=False
 
-    def ldapauth(self):
-        username=raw_input('input your ldap user:')
-        password=getpass.getpass("Please enter the ldap password: ")
-        user_dn="uid={},cn=users,cn=accounts,dc=wumii,dc=net".format(username)
+    def ldapauth(self,username,password):
+        user_dn="uid={},cn=users,cn=accounts,dc=example,dc=com".format(username)
         try:
             self.ldapconn.simple_bind_s(user_dn,password)
-            self.b64enret=base64.b64encode("{}:{}".format(username,password))
+            self.authSF=True
         except ldap.LDAPError,e:
             print e
         finally:
@@ -46,22 +44,26 @@ class Handler(BaseHTTPRequestHandler):
             self.do_AUTHHEAD()
             self.wfile.write('no auth header received')
             pass
-        elif self.headers.getheader('Authorization') == 'Basic dGVzdDp0ZXN0':
-            self.do_HEAD()
-            self.wfile.write(self.headers.getheader('Authorization'))
-            self.wfile.write('authenticated!')
-            pass
-        else:
-            self.do_AUTHHEAD()
-            self.wfile.write(self.headers.getheader('Authorization'))
-            self.wfile.write('not authenticated')
-            pass
+
+        elif self.headers.getheader('Authorization') != None:
+            authhead=self.headers.getheader('Authorization')[6:]
+            username=base64.b64decode(authhead).split(':')[0]
+            pwd=base64.b64decode(authhead).split(':')[1]
+            ldapauth=ReferLdap()
+            ldapauth.ldapauth(username,pwd)
+            if ldapauth.authSF:
+                self.do_HEAD()
+                self.wfile.write(self.headers.getheader('Authorization'))
+                self.wfile.write('authenticated!')
+                pass
+            else:
+                self.do_AUTHHEAD()
+                self.wfile.write(self.headers.getheader('Authorization'))
+                self.wfile.write('not authenticated')
+                pass
 
 httpd = SocketServer.TCPServer(("", 10001), Handler)
 httpd.serve_forever()
 
 if __name__ == '__main__':
     main()
-myldap=ReferLdap()
-myldap.ldapauth()
-print myldap.b64enret

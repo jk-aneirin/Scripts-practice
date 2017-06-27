@@ -3,11 +3,11 @@ import ldap
 import getpass
 
 if __name__=="__main__":
-    ldap_server='ldaps://ipa.wumii.net:636'
+    ldap_server='ldaps://ldapserver:port'
     username=raw_input('input your ldap user:')
     password=getpass.getpass("Please enter the ldap password: ")
-    user_dn="uid={},cn=users,cn=accounts,dc=wumii,dc=net".format(username)
-    base_dn="cn=users,cn=accounts,dc=wumii,dc=net"
+    user_dn="uid={},cn=users,cn=accounts,dc=example,dc=com".format(username)
+    base_dn="cn=users,cn=accounts,dc=examle,dc=com"
     #ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
     ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_ALLOW)
     ldapconn=ldap.initialize(ldap_server)
