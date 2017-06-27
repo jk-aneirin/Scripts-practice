@@ -2,6 +2,28 @@
 import SimpleHTTPServer
 import SocketServer
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+import ldap
+import base64
+import getpass
+
+class ReferLdap():
+    def __init__(self,ldap_server="ldaps://ipa.wumii.net:636"):
+        self.ldap_server=ldap_server
+        ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_ALLOW)
+        self.ldapconn=ldap.initialize(self.ldap_server)
+        self.b64enret=""
+
+    def ldapauth(self):
+        username=raw_input('input your ldap user:')
+        password=getpass.getpass("Please enter the ldap password: ")
+        user_dn="uid={},cn=users,cn=accounts,dc=wumii,dc=net".format(username)
+        try:
+            self.ldapconn.simple_bind_s(user_dn,password)
+            self.b64enret=base64.b64encode("{}:{}".format(username,password))
+        except ldap.LDAPError,e:
+            print e
+        finally:
+            self.ldapconn.unbind_s()
 
 class Handler(BaseHTTPRequestHandler):
     ''' Main class to present webpages and authentication. '''
@@ -36,8 +58,10 @@ class Handler(BaseHTTPRequestHandler):
             pass
 
 httpd = SocketServer.TCPServer(("", 10001), Handler)
-
 httpd.serve_forever()
 
 if __name__ == '__main__':
     main()
+myldap=ReferLdap()
+myldap.ldapauth()
+print myldap.b64enret
