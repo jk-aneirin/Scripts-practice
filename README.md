@@ -19,3 +19,5 @@ omitpoundsign.py:删除文件中开头包含井号的行
 ipstat.py:统计tengine日志文件的ip数目
 
 singleProRunning.py:保证同时只有一个singleProRunning.py在运行，实际工作的代码可以放在函数_run()中
+
+pg-failover.py:使用了fabric，来实现postgresql数据库的主备切换
