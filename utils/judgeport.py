@@ -26,6 +26,6 @@ def check_server(address,port):
 if __name__=='__main__':
     arggs=docopt(__doc__)
     if check_server(arggs['ADDRESS'],int(arggs['PORT'])):
-        print 'OK'
+        print 'Open'
     else:
-        print 'SHIT'
+        print 'Close'
