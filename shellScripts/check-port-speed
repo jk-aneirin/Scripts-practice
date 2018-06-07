@@ -1,0 +1,42 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+
+CRITICAL=
+WARNING=
+OK=
+
+GLOBAL_RET=0
+
+function set_ret() {
+    local RET=$1
+    if [ "$RET" -gt "$GLOBAL_RET" ]; then
+        GLOBAL_RET=$RET
+    fi
+}
+
+function check_port() {
+    local PORT=$1
+    local OUTPUT=$(/usr/bin/snmpget -v2c -c wumiiro 10.2.0.4 ifOperStatus.$PORT)
+    if [[ "$OUTPUT" =~ IF-MIB::ifOperStatus\.$PORT\ =\ INTEGER:\ up ]];then
+        local OUTPUT=$(/usr/lib/nagios/plugins/check_snmp -H 10.2.0.4 -C wumiiro -o ifSpeed.$PORT -c @:99999999 -w @100000000:999999999 -m RFC1213-MIB)
+        if [[ "$OUTPUT" =~ SNMP\ CRITICAL ]]; then
+                CRITICAL="${CRITICAL}${OUTPUT}"
+                set_ret 2
+        elif [[ "$OUTPUT" =~ SNMP\ WARNING ]]; then
+                WARNING="${WARNING}${OUTPUT}"
+                set_ret 1
+        elif [[ "$OUTPUT" =~ SNMP\ OK ]]; then
+                OK="${OK}${OUTPUT}"
+                set_ret 0
+        fi
+    fi
+
+}
+
+for i in $(seq 1 24);do
+    check_port $i
+done
+
+echo -n "${CRITICAL}${WARNING}${OK}"
+exit $GLOBAL_RET

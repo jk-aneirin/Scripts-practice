@@ -1,0 +1,11 @@
+#!/usr/bin/expect
+set user "username"
+set passwd "password"
+spawn ssh $user@10.0.0.111
+expect {
+    "yes/no" {send "yes\n"
+    expect "assword:" {send "$passwd\n"}
+    }
+    "*assword:" {send "$password\n"}
+}
+interact
