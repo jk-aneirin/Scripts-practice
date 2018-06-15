@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """ThreadLocal解决了全局变量需要加锁，局部变量传递麻烦的问题，下例演示了它的用法"""
 import threading
 
